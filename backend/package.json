@@ -1,0 +1,22 @@
+{
+  "name": "ecommerce-backend",
+  "version": "1.0.0",
+  "description": "This is a e-Commerce Web site for my Portfolio",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "babu",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.12.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.0",
+    "ts-node": "^10.9.2"
+  }
+}

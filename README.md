@@ -6,3 +6,6 @@ Steps to do:
 2. Mongo db instance to store the files. 
 3. Frontend using either Next.js(probably this is my choice)/React. 
 4. Redux for the state-management. 
+
+// Initialize a node project
+// Put a package.json
