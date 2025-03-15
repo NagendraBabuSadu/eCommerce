@@ -1,12 +1,18 @@
 import {z} from 'zod';
 
-export const User = z.object({
+const createUser = z.object({
+    email: z.string(),
+    password: z.string()
+})
+const updateUser = z.object({
     email: z.string(),
     password: z.string()
 })
 
-type User = z.infer<typeof User>
 
-module.exports = {
-    User : User
-}
+
+type createUser = z.infer<typeof createUser>
+type updateUser = z.infer<typeof updateUser>
+
+
+export { createUser, updateUser };
