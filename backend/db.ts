@@ -16,11 +16,17 @@ const userSchema = new Schema<IUser>({
 });
 
 // 3. Create a Model
-export const createUser = model<IUser>("user", userSchema);
+const user = model<IUser>("User", userSchema);
 
 // 4. Connect to a MongoDB
 dotenv.config({ path: ".env.local" });
-const MONGO_DB_URL = process.env.MONGO_DB_URL as string;
-mongoose.connect(MONGO_DB_URL);
+const MONGO_DB_URL = process.env.MONGO_DB_URL;
+mongoose.connect(MONGO_DB_URL).then(() => {
+  console.log("Connected to mongoDb")
 
-module.exports = { createUser: createUser };
+}).catch((err) => {
+  console.log("error is: ", err )
+})
+
+
+export { user };
