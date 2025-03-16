@@ -3,9 +3,11 @@ import express from "express";
 import { createUser, updateUser } from "./types.js";
 import { Request, Response, NextFunction } from "express";
 import { user } from "./db.js";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.get("/", async function (req: Request, res: Response, next: NextFunction) {
   res.status(200).json({
@@ -16,23 +18,30 @@ app.get("/", async function (req: Request, res: Response, next: NextFunction) {
 app.post(
   "/user",
   async function (req: Request, res: Response, next: NextFunction) {
-    const createPayload = req.body;
-    const parsedPayload = createUser.safeParse(createPayload);
-    if (!parsedPayload.success) {
-      res.status(411).json({
-        msg: "You sent wrong inputs",
+    try {
+      const createPayload = req.body;
+      const parsedPayload = createUser.safeParse(createPayload);
+      if (!parsedPayload.success) {
+        res.status(411).json({
+          msg: "You sent wrong inputs",
+        });
+        return;
+      }
+      //put it in mongoDb
+      const newUser = await user.create({
+        email: createPayload.email,
+        password: createPayload.password,
       });
-      return;
-    }
-    //put it in mongoDb
-    await user.create({
-      email: createPayload.email,
-      password: createPayload.password,
-    });
 
-    res.status(200).json({
-      msg: "User is created.",
-    });
+      await newUser.save();
+
+      res.status(200).json({
+        msg: "User is created.",
+        user: newUser,
+      });
+    } catch (error) {
+      res.status(500).json({ msg: "Error creating user", error });
+    }
   }
 );
 
