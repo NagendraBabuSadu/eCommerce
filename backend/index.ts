@@ -5,6 +5,7 @@ import cors from "cors";
 import authRoutes from './src/routes/auth.routes.js'
 import userModel from "./src/models/user.model.js";
 import connectDb from "./src/config/db.js";
+import adminRoutes from "./src/routes/admin.routes.js";
 
 
 const app = express();
@@ -32,6 +33,8 @@ app.get(
 );
 
 app.use("/auth", authRoutes); 
+app.use("/admin", adminRoutes);
+
 
 
 
