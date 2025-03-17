@@ -1,0 +1,59 @@
+
+app.put(
+  "/users/:id",
+  async function (
+    req: Request<{ id: string }>,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const updatePayload = req.body;
+      const parsedPayload = updateUser.safeParse(updatePayload);
+
+      if (!parsedPayload.success) {
+        return res.status(411).json({
+          msg: "Something is wrong",
+        });
+      }
+
+      const newUpdatedUser = await user.findByIdAndUpdate(
+        {
+          _id: req.params.id,
+        },
+        {
+          $set: updatePayload,
+        },
+        { new: true }
+      );
+
+      console.log("user is updated successfully");
+      console.log("newupdatedUser", newUpdatedUser);
+
+      res.status(200).json({
+        newUpdatedUser: newUpdatedUser,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+app.delete(
+  "/users/:id",
+  async function (
+    req: Request<{ id: string }>,
+    res: Response,
+    next: NextFunction
+  ) {
+    const deletedUser = await userModel.findByIdAndDelete({ _id: req.params.id });
+    console.log("deletedUser", deletedUser);
+    const newUsers = await userModel.find({});
+
+    res.status(200).json({
+      users: newUsers,
+    });
+  }
+);
+
+
+////////////////////////////////////////////////////////////
