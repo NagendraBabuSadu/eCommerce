@@ -1,22 +1,18 @@
-// mongoose schema
-
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-// 4. Connect to a MongoDB
 dotenv.config({ path: ".env.local" });
 
 const MONGO_DB_URL = process.env.MONGO_DB_URL;
 
 const connectDb = async () => {
-  await  mongoose
-    .connect(MONGO_DB_URL)
-    .then(() => {
-      console.log("Connected to mongoDb");
-    })
-    .catch((err) => {
-      console.log("error is: ", err);
-    });
+  try {
+    await mongoose.connect(MONGO_DB_URL);
+    console.log("Connected to mongoDb");
+  } catch (err) {
+    console.error("Error connecting to MongoDB:", err);
+    process.exit(1); 
+  }
 };
 
 export default connectDb;
