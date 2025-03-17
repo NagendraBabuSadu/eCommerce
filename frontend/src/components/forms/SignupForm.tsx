@@ -42,7 +42,7 @@ const SignupForm: React.FC = () => {
     e.preventDefault();
     console.log("handleSubmit");
     try {
-      const response = await axios.post("http://localhost:3000/user", {
+      const response = await axios.post("http://localhost:3000/signup", {
         email: formData.email,
         password: formData.password,
       });
