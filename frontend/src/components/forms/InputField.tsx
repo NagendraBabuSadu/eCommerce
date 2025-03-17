@@ -7,7 +7,7 @@ interface InputFieldProps {
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  className:string
+  className?: string;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -16,7 +16,7 @@ const InputField: React.FC<InputFieldProps> = ({
   name,
   value,
   onChange,
-  className
+  className,
 }) => {
   return (
     <div>
@@ -28,11 +28,15 @@ const InputField: React.FC<InputFieldProps> = ({
         name={name}
         value={value}
         onChange={onChange}
-        className={className}
+        className={className || ""}
+        sx={{
+          p: "10px 0px",
+          width: "20rem",
+        }}
+        color="primary"
       />
     </div>
   );
 };
-
 
 export default InputField;
