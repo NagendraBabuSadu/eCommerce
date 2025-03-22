@@ -1,11 +1,17 @@
 # eCommerce
-This is a mock e-Commerce website like amazon/flipkart. 
+eCommerce Prototype
+This project is a mock eCommerce website inspired by platforms like Amazon and Flipkart, developed using Node.js for the backend, MongoDB for the database, and Next.js for the frontend.​
 
-Steps to do: 
-1. Backend with Node.js/express.js
-2. Mongo db instance to store the files. 
-3. Frontend using either Next.js(probably this is my choice)/React. 
-4. Redux for the state-management. 
+## Features
+User authentication and authorization​
+Product browsing and search functionality​
+Shopping cart management​
+Order processing and payment integration​
+Admin panel for product and order management​
 
-// Initialize a node project
-// Put a package.json
+## Technologies Used
+Frontend: Next.js, React, Tailwind CSS​
+Backend: Node.js, Express.js​
+Database: MongoDB​
+Authentication: JWT (JSON Web Tokens)​
+
