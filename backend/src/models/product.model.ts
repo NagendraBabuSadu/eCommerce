@@ -3,14 +3,14 @@
 import mongoose, { Schema } from 'mongoose';
 
 interface IProduct {
-  name: string;
+  productName: string;
   price: number;
   description: string;
   category: string;
 }
 
 const productSchema = new Schema<IProduct>({
-    name: { type: String, required: true },
+    productName: { type: String, required: true },
     price: { type: Number, required: true },    
     description: { type: String, required: true },
     category: { type: String, required: false },
