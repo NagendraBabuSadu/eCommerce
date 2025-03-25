@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { createUser } from "../validators/auth.validators.js";
 import userModel from "../models/user.model.js";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const adminSignup = async function (
@@ -24,11 +23,9 @@ export const adminSignup = async function (
       return res.status(400).json({ message: "Admin already exists" });
     }
 
-    const hashedPassword = await bcrypt.hash(createPayload.password, 10);
-    //put it in mongoDb
     const newAdmin = await userModel.create({
       email: createPayload.email,
-      password: hashedPassword,
+      password: createPayload.password,  
       role: "admin",
     });
 
@@ -42,19 +39,14 @@ export const adminSignup = async function (
 
 export const adminLogin = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    const { email } = req.body;
 
     // Check if the admin exists
     const admin = await userModel.findOne({ email, role: "admin" });
     if (!admin) {
       return res.status(401).json({ message: "Invalid admin credentials" });
     }
-
-    // Compare password
-    const isMatch = await bcrypt.compare(password, admin.password);
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid admin credentials" });
-    }
+    
 
     // Generate JWT token
     const token = jwt.sign({id: admin._id, role: "admin"}, process.env.JWT_SECRET, {
