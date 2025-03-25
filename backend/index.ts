@@ -7,6 +7,9 @@ import userModel from "./src/models/user.model.js";
 import connectDb from "./src/config/db.js";
 import adminRoutes from "./src/routes/admin.routes.js";
 import productRoutes from "./src/routes/product.routes.js";
+import cartRoutes from './src/routes/cart.routes.js'
+import orderRoutes from './src/routes/order.routes.js'
+
 
 const app = express();
 app.use(express.json());
@@ -34,7 +37,10 @@ app.get(
 
 app.use("/auth", authRoutes); 
 app.use("/admin", adminRoutes);
-app.use("/product", productRoutes);
+app.use("/products", productRoutes);
+
+app.use("/cart", cartRoutes)
+app.use("/order", orderRoutes)
 
 
 
