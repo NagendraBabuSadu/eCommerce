@@ -42,10 +42,12 @@ const SignupForm: React.FC = () => {
     e.preventDefault();
     console.log("handleSubmit");
     try {
-      const response = await axios.post("http://localhost:3000/signup", {
+      const response = await axios.post("http://localhost:3000/auth/signup", {
         email: formData.email,
         password: formData.password,
       });
+
+      console.log("========> response", response)
 
       if (response.status === 200) {
         console.log("User added:", response.data);
