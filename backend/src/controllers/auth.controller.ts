@@ -14,7 +14,7 @@ export const signup = async function (
     const parsedPayload = createUser.safeParse(createPayload);
     if (!parsedPayload.success) {
       res.status(400).json({ msg: "You sent wrong input" });
-      console.log(typeof res.status); // Should print "function"
+      console.log(typeof res.status);
       return;
     }
 
@@ -30,7 +30,6 @@ export const signup = async function (
     //put it in mongoDb
     const newUser = await userModel.create({
       email: createPayload.email,
-      password: createPayload.password,
       role: "user",
     });
 
@@ -44,11 +43,13 @@ export const signup = async function (
       { expiresIn: "1h" } // Token expiration time
     );
 
-    await newUser.save();
+    // Store the token in MongoDB
+    newUser.token = token;
+    await newUser.save(); // Save the user with the token
 
     res.status(200).json({
       msg: "User is created.",
-      user: newUser,
+      user: newUser.email,
       token: token,
     });
   } catch (error) {
