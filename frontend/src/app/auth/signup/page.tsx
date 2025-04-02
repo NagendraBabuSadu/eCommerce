@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
-import InputField from "./InputField";
-import axios, { isAxiosError } from "axios";
+'use client'
+
 import { Alert, Box, Button } from "@mui/material";
-import styles from "./SignupForm.module.css";
-import { useNavigate } from "react-router-dom";
+import axios, { isAxiosError } from "axios";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import styles from './signup.module.css';
+import InputField from "@/app/components/InputField";
+
 
 const SignupForm: React.FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     _id: "",
@@ -53,7 +56,7 @@ const SignupForm: React.FC = () => {
         console.log("User added:", response.data);
         setSignupMessage("User signedup Successfully.");
         setTimeout(() => {
-          navigate("/login");
+            router.push("/auth/login");
         }, 2000);
       }
     } catch (error: unknown) {
@@ -83,7 +86,7 @@ const SignupForm: React.FC = () => {
     <div>
       {signupMessage && (
         <Alert
-          sx={{ bgcolor: "background.paper", mb: "20px" }}
+            sx={{ bgcolor: "background.paper", mb: "20px" }}
           variant="outlined"
           severity="success"
         >

@@ -1,0 +1,29 @@
+.signupform {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Centering the form on the page */
+  background-color: #000000; /* Light background for a modern look */
+}
+
+.signupCard {
+  background: rgb(248, 241, 241); /* Clean white card */
+  padding: 40px 30px;
+  border-radius: 12px;
+  color: black;
+  text-align: center;
+}
+
+
+.input {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+
+
+@media (max-width: 768px) {
+  .signupCard {
+    width: 90%; 
+  }
+}

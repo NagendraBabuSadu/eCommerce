@@ -1,8 +1,10 @@
+"use client"
+
 import React, { useEffect, useState } from "react";
-import InputField from "./InputField";
 import axios from "axios";
 import { Alert, Box, Button } from "@mui/material";
-import styles from "./SignupForm.module.css";
+import styles from "../signup/signup.module.css";
+import InputField from "@/app/components/InputField";
 
 const LoginForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -22,7 +24,7 @@ const LoginForm: React.FC = () => {
     console.log("handleSubmit");
 
     try {
-      const response = await axios.post("http://localhost:3000/login", {
+      const response = await axios.post("http://localhost:3000/auth/login", {
         email: formData.email,
         password: formData.password,
       });
@@ -72,7 +74,7 @@ const LoginForm: React.FC = () => {
             />
             <InputField
               label="Password"
-              type="text"
+              type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
