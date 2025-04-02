@@ -7,6 +7,7 @@ interface IProduct {
   price: number;
   description: string;
   category: string;
+  image: string;
 }
 
 const productSchema = new Schema<IProduct>({
@@ -14,6 +15,7 @@ const productSchema = new Schema<IProduct>({
     price: { type: Number, required: true },    
     description: { type: String, required: true },
     category: { type: String, required: false },
+    image: {type: String}
 })
 
 export default mongoose.model('Product', productSchema);
