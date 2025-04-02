@@ -21,6 +21,7 @@ const addProduct = async (req: Request, res: Response, next: NextFunction) => {
       price: createPayload.price,
       description: createPayload.description,
       category: createPayload.category,
+      image: createPayload.image
     });
 
     await newProduct.save();
