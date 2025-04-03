@@ -21,7 +21,7 @@ const addProduct = async (req: Request, res: Response, next: NextFunction) => {
       price: createPayload.price,
       description: createPayload.description,
       category: createPayload.category,
-      image: createPayload.image
+      image: createPayload.image,
     });
 
     await newProduct.save();
@@ -31,15 +31,36 @@ const addProduct = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+
+
+const categoryMap: Record<string, string> = {
+  men: "clothing",
+  women: "clothing",
+  mobiles: "electronics",
+  laptops: "electronics",
+  cameras: "electronics",
+  furniture: "home",
+  appliances: "home",
+};
+
 const getProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    if (req.query.name) {
-      getProductByName(req, res, next); // using getProductByName middleware
-    } else {
-      getProductsByCategory(req, res, next); // using getProductsByCategory middleware
+    let category = req.query.category as string;
+    
+    // Convert subcategory to main category if applicable
+    if (category && categoryMap[category]) {
+      category = categoryMap[category];
     }
+
+    // Fetch products based on category or get all if no category is provided
+    const products = category
+      ? await productModel.find({ category })
+      : await productModel.find();
+    res.status(200).json(products);
+
+    
   } catch (error) {
-    res.status(500).json({ msg: "Error creating product", error });
+    res.status(500).json({ msg: "Error fetching products", error });
   }
 };
 
@@ -53,6 +74,8 @@ const getProduct = async (req: Request, res: Response, next: NextFunction) => {
         msg: "success",
         Product: product,
       });
+    } else {
+      res.status(400).json({ msg: "Invalid product ID" });
     }
   } catch (error) {
     res.status(500).json({ msg: "Error finding product", error });
