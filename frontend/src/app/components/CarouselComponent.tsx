@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
@@ -6,15 +7,14 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Card, CardMedia, Box } from "@mui/material";
 
-const images = [
-  "https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/3d7827c92a670177.jpg?q=20",
-  "https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/57d9b129e302642e.jpg?q=22",
-  "https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/a354077c3747d8f6.png?q=21",
-];
+type ImageCarouselProps = {
+  images: string[]; 
+}
 
-const ImageCarousel: React.FC = () => {
+
+const ImageCarousel: React.FC<ImageCarouselProps> = ({images}) => {
   return (
-    <Box sx={{ width: "100%", maxWidth: "1280px", mx: "auto", mt: 1 }}>
+    <Box className="max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 mt-16">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}
@@ -24,7 +24,7 @@ const ImageCarousel: React.FC = () => {
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         loop
       >
-        {images.map((image, index) => (
+        {images?.map((image, index) => (
           <SwiperSlide key={index}>
             <Card>
               <CardMedia component="img" image={image} alt={`Slide ${index + 1}`} />
