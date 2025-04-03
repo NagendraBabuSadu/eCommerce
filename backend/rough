@@ -1,0 +1,16 @@
+const getProducts = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const category = req.query.category as string;
+    let products;
+
+    if (category) {
+      products = await productModel.find({ category });
+    } else {
+      products = await productModel.find();
+    }
+
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ msg: "Error fetching products", error });
+  }
+};
