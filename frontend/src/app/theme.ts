@@ -8,7 +8,7 @@ const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
     ...(mode === "light"
       ? {
           primary: { main: "#1976d2" },
-          background: { default: "#f5f5f5" },
+          background: { default: "#d1cfcf" },
         }
       : {
           primary: { main: "#90caf9" },
