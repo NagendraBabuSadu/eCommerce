@@ -60,8 +60,8 @@ const ProductList: React.FC = () => {
             onClick={() => setSelectedProduct(product)}
             sx={{
               display: "flex",
-              width: 270,
-              height: 200,
+              width: 300,
+              height: 250,
               borderRadius: 2,
               overflow: "hidden",
               // backgroundColor: "rgba(255, 255, 255, 0.86)",
