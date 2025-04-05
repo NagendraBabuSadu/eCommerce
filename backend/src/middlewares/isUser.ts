@@ -11,15 +11,15 @@ const isUser = async function (
   req: Request,
   res: Response,
   next: NextFunction
-) {
+) : Promise<void> {
   try {
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
-      return res.status(403).json({ msg: "Access denied" });
+      return void res.status(403).json({ msg: "Access denied" });
     }
 
     if(blacklistedTokens.has(token)) {
-      return res.status(401).json({ message: "No token, authorization denied." });
+      return void res.status(401).json({ message: "No token, authorization denied." });
     }
 
     // const isBlacklisted = await redis.get(`blacklist: ${token}`)
@@ -30,11 +30,11 @@ const isUser = async function (
 
 
 
-    const decoded: any = jwt.verify(token, process.env.JWT_SECRET) as {id: string};
+    const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string) as {id: string};
     const user = await userModel.findById(decoded.id);
 
     if (!user || user.role !== "user") {
-      return res.status(403).json({ msg: "Unauthorized access" });
+      return void res.status(403).json({ msg: "Unauthorized access" });
     }
 
     req.user = { id: decoded.id }; 

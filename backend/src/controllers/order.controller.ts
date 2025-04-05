@@ -2,12 +2,14 @@ import { Request, Response, NextFunction } from "express";
 import orderModel from "../models/order.model.js";
 import cartModel from "../models/cart.model.js";
 
-const addOrder = async (req: Request, res: Response, next: NextFunction) => {
-  const userId = req.user.id;
+const addOrder = async (req: Request, res: Response, next: NextFunction) : Promise<any> => {
+  const userId = req.user?.id;
   try {
     const userCart = await cartModel.findOne({ userId });
 
-    if (!userCart || userCart.products?.length === 0) {
+    const products = userCart?.products as OrderProduct[] | undefined;
+    
+    if (!products || products?.length === 0) {
       return res
         .status(400)
         .json({ msg: "Cart is empty. Cannot place order." });
@@ -19,14 +21,14 @@ const addOrder = async (req: Request, res: Response, next: NextFunction) => {
       price: number;
     };
 
-    const totalOrderPrice = userCart.products?.reduce(
+    const totalOrderPrice = products?.reduce(
       (acc: number, item: OrderProduct) => acc + item.quantity * item.price,
       0
     );
 
     const newOrder = await orderModel.create({
       userId,
-      products: userCart.products,
+      products: products,
       totalPrice: totalOrderPrice,
       paymentStatus: "pending",
     });
@@ -36,6 +38,7 @@ const addOrder = async (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json({ msg: "Order created", orderDetails: newOrder });
   } catch (error) {
     console.error("Error creating order:", error); // Log the full error
+    if(error instanceof Error)
     res
       .status(500)
       .json({ msg: "Error creating order", error: error.message || error });

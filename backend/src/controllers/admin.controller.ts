@@ -25,7 +25,7 @@ export const adminSignup = async function (
 
     const newAdmin = await userModel.create({
       email: createPayload.email,
-      password: createPayload.password,  
+      password: createPayload.password,
       role: "admin",
     });
 
@@ -36,8 +36,11 @@ export const adminSignup = async function (
   }
 };
 
-
-export const adminLogin = async (req: Request, res: Response) => {
+export const adminLogin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<any> => {
   try {
     const { email } = req.body;
 
@@ -46,16 +49,18 @@ export const adminLogin = async (req: Request, res: Response) => {
     if (!admin) {
       return res.status(401).json({ message: "Invalid admin credentials" });
     }
-    
 
     // Generate JWT token
-    const token = jwt.sign({id: admin._id, role: "admin"}, process.env.JWT_SECRET, {
-        expiresIn: "3h"
-    });
-
+    const token = jwt.sign(
+      { id: admin._id, role: "admin" },
+      process.env.JWT_SECRET as string,
+      {
+        expiresIn: "3h",
+      }
+    );
 
     res.json({ message: "Admin logged in successfully", token });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    if (error instanceof Error) res.status(500).json({ error: error.message });
   }
 };

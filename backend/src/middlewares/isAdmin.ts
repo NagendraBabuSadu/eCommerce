@@ -6,18 +6,18 @@ const isAdmin = async function (
   req: Request,
   res: Response,
   next: NextFunction
-) {
+): Promise<void> {
   try {
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
-      return res.status(403).json({ msg: "Access denied" });
+      return void res.status(403).json({ msg: "Access denied" });
     }
 
-    const decoded: any = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string);
     const admin = await userModel.findById(decoded.id);
 
     if (!admin || admin.role !== "admin") {
-      return res.status(403).json({ msg: "Unauthorized access" });
+      return void res.status(403).json({ msg: "Unauthorized access" });
     }
 
     next();

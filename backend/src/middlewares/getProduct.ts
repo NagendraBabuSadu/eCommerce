@@ -9,7 +9,7 @@ const getProductByName = async (
   try {
     const { name } = req.query;
     const products = await productModel.find({
-      name: new RegExp(name, "i"),
+      name: new RegExp(name as string, "i"),
     });
     res.status(200).json({
       msg: "success",
@@ -29,7 +29,7 @@ const getProductsByCategory = async (
   try {
     const { category } = req.query;
     const products = await productModel.find({
-      category: new RegExp(category, "i"),
+      category: new RegExp(category as string, "i"),
     });
     res.status(200).json({ msg: "success", products });
   } catch (error) {

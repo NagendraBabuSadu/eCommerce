@@ -7,8 +7,8 @@ const addCartProducts = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
-  const userId = req.user.id; // Extract from authenticated request
+) : Promise <void>=>  {
+  const userId = req.user?.id; // Extract from authenticated request
   try {
     const createPayload = req.body;
     const parsedPayload = createCart.safeParse(createPayload);
@@ -16,7 +16,7 @@ const addCartProducts = async (
 
     if (!parsedPayload.success) {
       console.log("Validation Error:", parsedPayload.error);
-      return res
+      return void res
         .status(400)
         .json({ msg: "You sent wrong input", errors: parsedPayload.error });
     }
@@ -30,7 +30,7 @@ const addCartProducts = async (
     // Ensure products is an array
     if (!Array.isArray(createPayload.products)) {
       console.error("Invalid products format:", createPayload.products);
-      return res.status(400).json({ msg: "Products must be an array" });
+      return void res.status(400).json({ msg: "Products must be an array" });
     }
 
     const productsWithIds = await Promise.all(
@@ -69,6 +69,7 @@ const addCartProducts = async (
     res.status(200).json({ msg: "Cart created", cartDetails: newCart });
   } catch (error) {
     console.error("Error creating cart:", error); // Log the full error
+    if(error instanceof Error)
     res
       .status(500)
       .json({ msg: "Error creating cart", error: error.message || error });
@@ -79,21 +80,21 @@ const getCartProducts = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const getUserCartDetails = await cartModel.findOne({
       userId,
     });
 
     if (!userId) {
-      return res.status(411).json({
+      return void res.status(411).json({
         message: "User not found.",
       });
     }
     // Check if the cart exists
     if (!getUserCartDetails) {
-      return res.status(404).json({ message: "Cart not found for the user." });
+      return void res.status(404).json({ message: "Cart not found for the user." });
     }
 
     res.status(200).json({
@@ -102,6 +103,7 @@ const getCartProducts = async (
     });
   } catch (error) {
     console.error("Error getting cart:", error); // Log the full error
+    if(error instanceof Error)
     res
       .status(500)
       .json({ msg: "Error getting cart", error: error.message || error });
