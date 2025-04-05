@@ -26,7 +26,7 @@ const app = express();
 app.use(express.json());
 const allowedOrigins = [
   "http://localhost:3001",
-  "https://e-commerce-phi-fawn-48.vercel.app",
+  "https://e-commerce-babu.vercel.app",
 ];
 
 app.use(
