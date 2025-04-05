@@ -14,6 +14,8 @@ import axios from "axios";
 
 
 const ProductList: React.FC = () => {
+
+
   const [products, setProducts] = useState<
     {
       _id: string;
@@ -25,7 +27,16 @@ const ProductList: React.FC = () => {
     }[]
   >([]);
 
-  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+    interface Product {
+      _id: string;
+      productName: string;
+      category: string;
+      description: string;
+      price: number;
+      image: string;
+    }
+
+  const [selectedProduct, setSelectedProduct] = useState<Product | null >(null);
 
   useEffect(() => {
     console.log("API Base URL:", process.env.NEXT_PUBLIC_API_BASE_URL); // Debug line
