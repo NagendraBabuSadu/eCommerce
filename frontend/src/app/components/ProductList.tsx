@@ -160,7 +160,7 @@ const ProductList: React.FC = () => {
         ))}
       </Grid>
       {/* Modal */}
-      <Modal open={!!selectedProduct} onClose={() => setSelectedProduct(null)}>
+      <Modal open={Boolean(selectedProduct)} onClose={() => setSelectedProduct(null)}>
         <Box
           sx={{
             position: "absolute",
