@@ -18,7 +18,9 @@ const Navbar = () => {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (!event.target?.closest(".dropdown-container")) {
+      const target = event.target as HTMLElement;
+
+      if (target && !target?.closest(".dropdown-container")) {
         setHoveredCategory(null);
       }
     };
