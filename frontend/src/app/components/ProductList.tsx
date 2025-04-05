@@ -9,13 +9,9 @@ import {
   Modal,
   Box,
 } from "@mui/material";
-import Grid from "@mui/material/Grid";
 import axios from "axios";
 
-
 const ProductList: React.FC = () => {
-
-
   const [products, setProducts] = useState<
     {
       _id: string;
@@ -27,16 +23,16 @@ const ProductList: React.FC = () => {
     }[]
   >([]);
 
-    interface Product {
-      _id: string;
-      productName: string;
-      category: string;
-      description: string;
-      price: number;
-      image: string;
-    }
+  interface Product {
+    _id: string;
+    productName: string;
+    category: string;
+    description: string;
+    price: number;
+    image: string;
+  }
 
-  const [selectedProduct, setSelectedProduct] = useState<Product | null >(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     console.log("API Base URL:", process.env.NEXT_PUBLIC_API_BASE_URL); // Debug line
@@ -57,110 +53,104 @@ const ProductList: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <Grid container spacing={10} justifyContent="center">
+      <div className="flex flex-wrap gap-6 justify-center">
         {products?.map((product) => (
-          <Grid item xs={12} sm={6} md={4} key={product._id}>
-            <Card
-              className="shadow-lg rounded-lg hover:shadow-xl transition-shadow"
+          <Card
+            key={product._id}
+            onClick={() => setSelectedProduct(product)}
+            sx={{
+              display: "flex",
+              width: 270,
+              height: 200,
+              borderRadius: 2,
+              overflow: "hidden",
+              // backgroundColor: "rgba(255, 255, 255, 0.86)",
+              backdropFilter: "blur(10px)",
+              border: "1px solid rgba(255, 255, 255, 0.2)",
+              boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
+              cursor: "pointer",
+              transition: "all 0.3s ease-in-out",
+              "&:hover": {
+                boxShadow: "0px 0px 30px rgba(149, 149, 149, 0.68)",
+                transform: "scale(1.05)", // 👈 Added this line
+                borderColor: "rgba(255, 255, 255, 0.5)",
+              },
+            }}
+          >
+            {/* Image section */}
+            <CardMedia
+              component="img"
+              image={product.image}
+              alt={product.productName}
               sx={{
-                height: "22rem",
-                width: "100%",
+                width: 100,
+                height: "100%",
+                objectFit: "cover",
+                flexShrink: 0,
+              }}
+            />
+
+            {/* Content section */}
+            <CardContent
+              sx={{
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
-                alignItems: "center",
-                background: "rgba(255, 255, 255, 0.1)",
-                backdropFilter: "blur(10px)",
-                borderRadius: "15px",
-                overflow: "hidden",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
-                boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
-                transition: "all 0.3s ease-in-out",
-                position: "relative",
-                "&:hover": {
-                  cursor: "pointer",
-                  boxShadow: "0px 8px 25px rgba(0, 0, 0, 0.3)",
-                  border: "1px solid rgba(255, 255, 255, 0.5)",
-                },
-                "&::before": {
-                  content: '""',
-                  position: "absolute",
-                  inset: 0,
-                  zIndex: -1,
-                  background:
-                    "linear-gradient(135deg, rgba(255,255,255,0.2), rgba(0,0,0,0.1))",
-                  transition: "opacity 0.3s",
-                  opacity: 0,
-                },
-                "&:hover::before": {
-                  opacity: 1,
-                },
+                p: 2,
+                width: "100%",
               }}
-              onClick={() => setSelectedProduct(product)}
             >
-              <CardMedia
-                component="img"
-                sx={{
-                  height: "24rem",
-                  objectFit: "fill",
-                  width: "160px",
-                  overflow: "hidden",
-                  m: "10px",
-                  p: "4px",
-                  "&:hover": {
-                    transform: "scale(1.05)",
-                  },
-                }}
-                image={product.image}
-                alt={product.image}
-              />
-              <CardContent sx={{ textAlign: "left", flexGrow: 1 }}>
+              <Box>
                 <Typography
-                  variant="h6"
-                  className="font-semibold"
-                  sx={{
-                    textTransform: "capitalize",
-                  }}
-                  title={product.productName}
+                  variant="subtitle1"
+                  fontWeight="bold"
+                  textTransform="capitalize"
                 >
-                  {product.productName.length > 13
-                    ? product.productName.slice(0, 13) + "..."
+                  {product.productName.length > 20
+                    ? product.productName.slice(0, 20) + "..."
                     : product.productName}
                 </Typography>
                 <Typography
                   variant="body2"
                   sx={{
-                    height: 40,
-                    overflow: "hidden",
                     display: "-webkit-box",
+                    overflow: "hidden",
                     WebkitBoxOrient: "vertical",
                     WebkitLineClamp: 2,
                     textTransform: "capitalize",
+                    mt: 1,
                   }}
-                  title={product.description}
                 >
-                  {product.description.length > 15
-                    ? product.description.slice(0, 15) + " ...more"
+                  {product.description.length > 40
+                    ? product.description.slice(0, 40) + "..."
                     : product.description}
                 </Typography>
-                <Typography variant="h6" className="text-red-500 mt-2">
+              </Box>
+
+              <Box>
+                <Typography variant="h6" color="error" sx={{ mt: 1 }}>
                   ₹{product.price}
                 </Typography>
                 <Button
                   variant="contained"
                   color="primary"
-                  className="mt-3 w-full"
-                  sx={{ width: "100%", marginBottom: 1 }}
+                  size="small"
+                  fullWidth
+                  sx={{ mt: 1 }}
                 >
                   Add to Cart
                 </Button>
-              </CardContent>
-            </Card>
-          </Grid>
+              </Box>
+            </CardContent>
+          </Card>
         ))}
-      </Grid>
+      </div>
+
       {/* Modal */}
-      <Modal open={Boolean(selectedProduct)} onClose={() => setSelectedProduct(null)}>
+      <Modal
+        open={Boolean(selectedProduct)}
+        onClose={() => setSelectedProduct(null)}
+      >
         <Box
           sx={{
             position: "absolute",
