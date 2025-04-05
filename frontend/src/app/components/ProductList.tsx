@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import {
-  Grid,
   Card,
   CardContent,
   CardMedia,
@@ -10,6 +9,7 @@ import {
   Modal,
   Box,
 } from "@mui/material";
+import Grid from "@mui/material/Grid";
 import axios from "axios";
 
 
