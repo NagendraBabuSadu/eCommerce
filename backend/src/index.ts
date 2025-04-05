@@ -1,51 +1,71 @@
-// Write boiler plate for express.json
-import express from "express";
-import { Request, Response, NextFunction } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
-import authRoutes from './routes/auth.routes.js'
-import userModel from "./models/user.model.js";
+import dotenv from "dotenv";
+import path from "path";
+
 import connectDb from "./config/db.js";
+import authRoutes from "./routes/auth.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
 import productRoutes from "./routes/product.routes.js";
-import cartRoutes from './routes/cart.routes.js'
-import orderRoutes from './routes/order.routes.js'
+import cartRoutes from "./routes/cart.routes.js";
+import orderRoutes from "./routes/order.routes.js";
+import userModel from "./models/user.model.js";
+import { fileURLToPath } from "url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const app = express();
-app.use(express.json());
-app.use(cors({
-  origin: "http://localhost:3001", // Replace with your frontend URL
-  credentials: true,
-}));
+// Load environment variables
+dotenv.config({ path: path.resolve(__dirname, "../.env.local") });
 
 connectDb();
 
-app.get("/", async function (req: Request, res: Response, next: NextFunction) {
-  res.status(200).json({
-    msg: "connected to 3000",
-  });
+const app = express();
+
+// Middleware
+app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:3001", // Update with your frontend URL
+    credentials: true,
+  })
+);
+
+// Health check / root route
+app.get("/", (req: Request, res: Response) => {
+  res.status(200).json({ msg: "connected to 3000" });
 });
 
-
-app.get(
-  "/users",
-  async function (req: Request, res: Response, next: NextFunction) {
+// Example route to fetch all users
+app.get("/users", async (req: Request, res: Response, next: NextFunction) => {
+  try {
     const users = await userModel.find({});
     res.status(200).json({
       msg: "users are fetched",
-      users: users,
+      users,
     });
+  } catch (err) {
+    next(err);
   }
-);
+});
 
-app.use("/auth", authRoutes); 
+// API Routes
+app.use("/auth", authRoutes);
 app.use("/admin", adminRoutes);
 app.use("/products", productRoutes);
+app.use("/cart", cartRoutes);
+app.use("/order", orderRoutes);
 
-app.use("/cart", cartRoutes)
-app.use("/order", orderRoutes)
+// Global error handler (optional but good to have)
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  console.error(err.stack);
+  res
+    .status(500)
+    .json({ message: "Something went wrong!", error: err.message });
+});
 
-
-
-
-app.listen(3000);
+// Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
+});
