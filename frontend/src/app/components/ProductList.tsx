@@ -13,7 +13,6 @@ import {
 import axios from "axios";
 
 
-
 const ProductList: React.FC = () => {
   const [products, setProducts] = useState<
     {
@@ -29,16 +28,21 @@ const ProductList: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/products")
-      .then((response) => {
-        console.log('response', response.data)
+    console.log("API Base URL:", process.env.NEXT_PUBLIC_API_BASE_URL); // Debug line
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/products`
+        );
         setProducts(response.data);
-      })
-      .catch((error) => {
+        console.log("Fetched products:", response.data);
+      } catch (error) {
         console.error("Error fetching products:", error);
-      });
-  }, []);
+      }
+    };
+
+    fetchProducts();
+  }, []); // Empty dependency array = runs once on mount
 
   return (
     <div className="container mx-auto p-4">
@@ -102,7 +106,7 @@ const ProductList: React.FC = () => {
               <CardContent sx={{ textAlign: "left", flexGrow: 1 }}>
                 <Typography
                   variant="h6"
-                  className="font-semibold text-white"
+                  className="font-semibold"
                   sx={{
                     textTransform: "capitalize",
                   }}
@@ -114,7 +118,6 @@ const ProductList: React.FC = () => {
                 </Typography>
                 <Typography
                   variant="body2"
-                  className="text-white"
                   sx={{
                     height: 40,
                     overflow: "hidden",
