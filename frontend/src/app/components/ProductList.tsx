@@ -35,12 +35,12 @@ const ProductList: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
-    console.log("API Base URL:", process.env.NEXT_PUBLIC_API_BASE_URL); // Debug line
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/+$/, ""); // Remove trailing slashes
+    console.log("Sanitized API Base URL:", baseUrl);
+
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/products`
-        );
+        const response = await axios.get(`${baseUrl}/products`);
         setProducts(response.data);
         console.log("Fetched products:", response.data);
       } catch (error) {
