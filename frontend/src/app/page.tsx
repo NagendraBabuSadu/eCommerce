@@ -1,4 +1,4 @@
-"use client";
+
 import ImageCarousel from "./components/CarouselComponent";
 import { ProductList } from "./components/ProductList";
 
