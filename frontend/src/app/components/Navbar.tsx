@@ -4,7 +4,6 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 
-
 const categories = [
   { name: "Electronics", subcategories: ["Mobiles", "Laptops", "Cameras"] },
   { name: "Fashion", subcategories: ["Men", "Women", "Kids"] },
@@ -30,7 +29,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="w-full bg-blue-600">
+    <div className="sticky top-0 z-50 backdrop-blur-md bg-blue-600/80 shadow-md">
       <div className="max-w-6xl mx-auto px-4 py-4 sm:px-6 flex justify-between items-center">
         {/* Logo / Brand */}
         <h1 className="text-white text-lg sm:text-xl font-bold">
@@ -50,7 +49,7 @@ const Navbar = () => {
         </button>
 
         {/* Desktop Navigation */}
-        <nav className="hidden sm:flex gap-6 text-white font-bold">
+        <nav className="hidden sm:flex gap-6 text-white font-bold ">
           {categories?.map((category) => (
             <div
               key={category.name}
@@ -75,9 +74,8 @@ const Navbar = () => {
               {/* Dropdown Menu */}
               {hoveredCategory === category.name && (
                 <div className="absolute top-full left-0 mt-2 w-40 bg-white text-black shadow-md rounded-md z-10">
-                  
                   {category.subcategories?.map((sub) => (
-                    <form key={sub} >
+                    <form key={sub}>
                       <input
                         type="hidden"
                         name="category"
@@ -108,7 +106,6 @@ const Navbar = () => {
                   <KeyboardArrowDownIcon />
                 </summary>
                 <div className="ml-4 mt-2 text-gray-200">
-               
                   {category.subcategories?.map((sub) => (
                     <form key={sub}>
                       <input
