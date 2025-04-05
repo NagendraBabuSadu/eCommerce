@@ -24,13 +24,22 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+const allowedOrigins = [
+  "http://localhost:3001",
+  "https://e-commerce-phi-fawn-48.vercel.app",
+];
+
 app.use(
   cors({
-    origin: "http://localhost:3001", // Update with your frontend URL
-    credentials: true,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   })
 );
-
 // Health check / root route
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json({ msg: "connected to 3000" });
