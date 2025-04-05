@@ -29,7 +29,7 @@ const Navbar = () => {
 
   return (
     <div className="w-full bg-blue-600">
-      <div className="max-w-6xl mx-auto px-4 py-3 sm:px-6 flex justify-between items-center">
+      <div className="max-w-6xl mx-auto px-4 py-4 sm:px-6 flex justify-between items-center">
         {/* Logo / Brand */}
         <h1 className="text-white text-lg sm:text-xl font-bold">
           My E-Commerce
