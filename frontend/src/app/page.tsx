@@ -11,9 +11,8 @@ export default function Home() {
   ];
 
   return (
-    <div className="grid grid-rows-[10px_1fr_10px] items-center justify-items-center min-h-screen p-1 pb-1 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-  
+    <div className="grid grid-columns-[1px_1fr_1px] justify-items-center min-h-screen sm:p-2 font-[family-name:var(--font-geist-sans)]">
+      <main className="flex flex-col gap-[1px] row-start-2 items-center sm:items-start">
         <ImageCarousel images={scrollImages} />
         <ProductList />
       </main>
