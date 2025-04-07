@@ -7,8 +7,7 @@ import {
   Typography,
   Button,
   Modal,
-  Box,
-  ImageList,
+  Box
 } from "@mui/material";
 import axios from "axios";
 
