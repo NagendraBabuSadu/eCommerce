@@ -53,9 +53,16 @@ const ProductList: React.FC = () => {
   }, []); // Empty dependency array = runs once on mount
 
   return (
-    <ImageList
+    <Box
       sx={{
-        width: "100%",
+        display: "grid",
+        gridTemplateColumns: {
+          xs: "repeat(2, 1fr)", // small screens
+          sm: "repeat(2, 1fr)",
+          md: "repeat(3, 1fr)",
+          lg: "repeat(4, 1fr)", // larger screens
+        },
+        maxWidth: "100%",
         height: 1000,
         padding: "20px",
         overflowY: "scroll",
@@ -63,30 +70,27 @@ const ProductList: React.FC = () => {
         "&::-webkit-scrollbar": {
           display: "none",
         },
+        gap: 3,
+        p: 2,
+        margin: "0px 15rem"
       }}
-      cols={4}
-      rowHeight={300}
     >
-      {/* <div className="flex flex-wrap gap-6 justify-center"> */}
       {products?.map((product) => (
         <Card
           key={product._id}
           onClick={() => setSelectedProduct(product)}
           sx={{
-            display: "flex",
-            width: 300,
             height: 250,
             borderRadius: 2,
             overflow: "hidden",
-            padding: "20px",
-            backdropFilter: "blur(10px)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
-            boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
+            padding: 2,
             cursor: "pointer",
             transition: "all 0.3s ease-in-out",
+            display: "flex",
+            flexDirection: "row",
             "&:hover": {
-              boxShadow: "0px 0px 30px rgba(149, 149, 149, 0.68)",
-              transform: "scale(1.05)", // 👈 Added this line
+              boxShadow: "0px 0px 6px",
+              transform: "scale(1.05)",
               borderColor: "rgba(255, 255, 255, 0.5)",
             },
           }}
@@ -268,7 +272,7 @@ const ProductList: React.FC = () => {
           )}
         </Box>
       </Modal>
-    </ImageList>
+    </Box>
   );
 };
 
