@@ -7,7 +7,7 @@ import {
   Typography,
   Button,
   Modal,
-  Box
+  Box,
 } from "@mui/material";
 import axios from "axios";
 
@@ -63,16 +63,14 @@ const ProductList: React.FC = () => {
         },
         maxWidth: "100%",
         height: 1000,
-        padding: "20px",
+        padding: "10px",
         overflowY: "scroll",
         scrollbarWidth: "none",
         "&::-webkit-scrollbar": {
           display: "none",
         },
-        gap: 3,
-        p: 2,
-        margin: "0px 15rem"
-        // comment added
+        gap: 5,
+        margin: "0px 18rem",
       }}
     >
       {products?.map((product) => (
@@ -83,14 +81,16 @@ const ProductList: React.FC = () => {
             height: 250,
             borderRadius: 2,
             overflow: "hidden",
-            padding: 2,
+            padding: 1,
             cursor: "pointer",
             transition: "all 0.3s ease-in-out",
             display: "flex",
+            border: "2px solid grey",
             flexDirection: "row",
             "&:hover": {
               boxShadow: "0px 0px 6px",
               transform: "scale(1.05)",
+              border: "2px solid grey",
               borderColor: "rgba(255, 255, 255, 0.5)",
             },
           }}
@@ -101,7 +101,7 @@ const ProductList: React.FC = () => {
             image={product.image}
             alt={product.productName}
             sx={{
-              width: 100,
+              width: 130,
               height: "100%",
               objectFit: "cover",
               flexShrink: 0,
