@@ -13,7 +13,7 @@ type ImageCarouselProps = {
 
 const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   return (
-    <Box className="max-w-7xl w-full mx-auto px-1 sm:px-6 py-10 mt-4 lg:px-2">
+    <Box className="max-w-400 w-full mx-auto px-1 sm:px-6 py-10 mt-4 lg:px-2">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={24}
@@ -36,7 +36,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
                     xs: 60,
                     sm: 60,
                     md: 90,
-                    lg: 140,
+                    lg: 200,
                   },
                   objectFit: "cover",
                 }}
