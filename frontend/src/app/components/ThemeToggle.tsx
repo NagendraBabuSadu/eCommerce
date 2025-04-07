@@ -9,7 +9,7 @@ export default function ThemeToggleButton() {
   const { toggleColorMode, mode } = useColorMode();
 
   return (
-    <Tooltip title="Toggle light/dark theme">
+    <Tooltip title="Toggle light/dark theme" sx={{mt: "70px"}}>
       <IconButton onClick={toggleColorMode} color="inherit">
         {mode === "dark" ? <Brightness7 /> : <Brightness4 />}
       </IconButton>
