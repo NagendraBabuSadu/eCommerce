@@ -14,4 +14,7 @@ This project is a mock eCommerce website inspired by platforms like Amazon and F
 * Backend: Node.js, Express.js​
 * Database: MongoDB​
 * Authentication: JWT (JSON Web Tokens)​
+---
+* `Swiper` and `SwiperSlide` are used for the image carousel. 
+* 
 
