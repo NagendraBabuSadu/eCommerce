@@ -1,7 +1,5 @@
-
 import ImageCarousel from "./components/CarouselComponent";
 import { ProductList } from "./components/ProductList";
-
 
 export default function Home() {
   const scrollImages = [
@@ -11,11 +9,15 @@ export default function Home() {
   ];
 
   return (
-    <div className="grid grid-columns-[1px_1fr_1px] justify-items-center min-h-screen sm:p-2 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[1px] row-start-2 items-center sm:items-start">
-        <ImageCarousel images={scrollImages} />
-        <ProductList />
-      </main>
+    <div
+      className="flex flex-col justify-items-center min-h-screen 
+    px-1 font-[family-name:var(--font-geist-sans)] 
+    sm:px-2 
+    md:px-4 
+    lg:px-6"
+    >
+      <ImageCarousel images={scrollImages} />
+      <ProductList />
     </div>
   );
 }
