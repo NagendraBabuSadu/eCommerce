@@ -99,7 +99,7 @@ const LoginForm: React.FC = () => {
                 onChange={handleChange}
               />
               <p className="text-xs text-gray-500 mb-4">
-                By continuing, you agree to Flipkart's Terms of Use and Privacy
+                By continuing, you agree to BuyNest Terms of Use and Privacy
                 Policy.
               </p>
               <button
