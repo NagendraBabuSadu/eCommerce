@@ -1,12 +1,11 @@
-'use client'
+"use client";
 
 import { Alert, Box, Button } from "@mui/material";
 import axios, { isAxiosError } from "axios";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import styles from './signup.module.css';
+import styles from "./signup.module.css";
 import InputField from "@/app/components/InputField";
-
 
 const SignupForm: React.FC = () => {
   const router = useRouter();
@@ -50,13 +49,13 @@ const SignupForm: React.FC = () => {
         password: formData.password,
       });
 
-      console.log("========> response", response)
+      console.log("========> response", response);
 
       if (response.status === 200) {
         console.log("User added:", response.data);
         setSignupMessage("User signedup Successfully.");
         setTimeout(() => {
-            router.push("/auth/login");
+          router.push("/auth/login");
         }, 2000);
       }
     } catch (error: unknown) {
@@ -86,7 +85,7 @@ const SignupForm: React.FC = () => {
     <div>
       {signupMessage && (
         <Alert
-            sx={{ bgcolor: "background.paper", mb: "20px" }}
+          sx={{ bgcolor: "background.paper", mb: "20px" }}
           variant="outlined"
           severity="success"
         >
