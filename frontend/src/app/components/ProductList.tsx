@@ -111,7 +111,7 @@ const ProductList: React.FC = () => {
                 height: "100%",
                 objectFit: "contain",
                 borderRadius: 1,
-                transition: "all 0.3s ease-in-out",
+                // transition: "all 0.3s ease-in-out",
                 "&:hover": {
                   transform: "scale(1.3)  translateX(10px)",
                 }
