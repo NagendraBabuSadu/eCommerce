@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Alert, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import styles from "../signup/signup.module.css";
 import Image from "next/image";
 
@@ -55,15 +55,7 @@ const LoginForm: React.FC = () => {
   const theme = useTheme();
   return (
     <div>
-      {loginMessage && (
-        <Alert
-          sx={{ bgcolor: theme.palette.background.default, mb: "20px" }}
-          variant="outlined"
-          severity="success"
-        >
-          {loginMessage}
-        </Alert>
-      )}
+      {loginMessage && <div>{loginMessage}</div>}
       <form action="" onSubmit={handleSubmit} className={styles.signupform}>
         <div className={styles.signupCard}>
           <h2>Login</h2>
