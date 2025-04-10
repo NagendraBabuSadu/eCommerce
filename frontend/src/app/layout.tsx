@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "./components/Navbar";
 import ThemeRegistry from "./components/ThemeRegistry";
-import ThemeToggleButton from "./components/ThemeToggle";
+import PrimaryNavbar from "./components/PrimaryNavbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,13 +32,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> */}
-        <div className="flex flex-col">
-          <ThemeRegistry>
+        <ThemeRegistry>
+          <PrimaryNavbar />
+          <div className="pt-16">
             <Navbar />
-            <ThemeToggleButton />
             {children}
-          </ThemeRegistry>
-        </div>
+          </div>
+        </ThemeRegistry>
       </body>
     </html>
   );
