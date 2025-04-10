@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Alert, Box, Button, useTheme } from "@mui/material";
+import { Alert, useTheme } from "@mui/material";
 import styles from "../signup/signup.module.css";
-import InputField from "@/app/components/InputField";
+import Image from "next/image";
 
 const LoginForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -73,7 +73,7 @@ const LoginForm: React.FC = () => {
               <p className="text-sm leading-relaxed">
                 Get access to your Orders, Wishlist and Recommendations
               </p>
-              <img
+              <Image
                 src="https://img.freepik.com/free-vector/login-concept-illustration_114360-739.jpg"
                 alt="Login illustration"
                 className="mt-8 w-full"
