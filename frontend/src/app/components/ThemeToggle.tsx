@@ -13,7 +13,7 @@ export default function ThemeToggleButton() {
       sx={{
         position: "fixed",
         top: 10,
-        right: 16,
+        right: 10,
         zIndex: 9999,
       }}
     >
