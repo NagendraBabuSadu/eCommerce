@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useTheme } from "@mui/material";
 import styles from "../signup/signup.module.css";
 import Image from "next/image";
 
@@ -52,7 +51,6 @@ const LoginForm: React.FC = () => {
     return () => clearTimeout(timer);
   }, [loginMessage]);
 
-  const theme = useTheme();
   return (
     <div>
       {loginMessage && <div>{loginMessage}</div>}
