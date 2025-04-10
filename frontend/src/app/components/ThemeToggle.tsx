@@ -12,15 +12,15 @@ export default function ThemeToggleButton() {
     <Box
       sx={{
         position: "fixed",
-        top: 10,
-        right: 10,
+        top: 12,
+        right: 2,
         zIndex: 9999,
+        alignItems: "center"
       }}
     >
       <Tooltip
-        title="Toggle light/dark theme justify-right"
-        sx={{ mt: "70px" }}
-      >
+        title="Toggle light/dark" className="theme justify-right"
+        >
         <IconButton onClick={toggleColorMode} color="inherit">
           {mode === "dark" ? <Brightness7 /> : <Brightness4 />}
         </IconButton>
