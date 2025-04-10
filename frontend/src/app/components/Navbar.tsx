@@ -9,12 +9,9 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-blue-600/80 p-4 backdrop-blur-md">
+    <nav className=" left-0 w-full bg-blue-600/80 p-4 backdrop-blur-md">
       <div className="flex justify-between items-center">
-        <h1 className="text-white text-lg sm:text-xl font-bold">
-          My E-Commerce
-        </h1>
-
+   
         <button
           className="text-white sm:hidden"
           onClick={() => setMobileMenuOpen((prev) => !prev)}
