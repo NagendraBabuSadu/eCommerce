@@ -99,7 +99,7 @@ export const authUpdate = async function (
   req: Request,
   res: Response,
   next: NextFunction
-):Promise<any> {
+): Promise<any> {
   try {
     const updatePayload = req.body;
     const parsedPayload = updateUser.safeParse(updatePayload);
@@ -160,11 +160,15 @@ export const login = async function (
       { expiresIn: "1h" }
     );
 
-    res.status(200).json({ message: "Login successful", token: token });
+    res.status(200).json({
+      message: "Login successful",
+      token: token,
+      user: existingUser.email,
+    });
   } catch (error) {
     console.error("Error in /login:", error);
-    if(error instanceof Error)
-    res.status(500).json({ msg: "Error finding user", error: error.message });
+    if (error instanceof Error)
+      res.status(500).json({ msg: "Error finding user", error: error.message });
   }
 };
 
@@ -198,11 +202,12 @@ export const logout = async (
     res.status(200).json({
       message: "User logged out successfully. ",
     });
-  } catch (error ) {
+  } catch (error) {
     console.error("Error during logout:", error);
-    if(error instanceof Error)
-    res
-    .status(500)
-      .json({ message: "Error during logout", error: error.message || error });
+    if (error instanceof Error)
+      res.status(500).json({
+        message: "Error during logout",
+        error: error.message || error,
+      });
   }
 };
