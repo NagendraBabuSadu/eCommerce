@@ -4,8 +4,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "../signup/signup.module.css";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const LoginForm: React.FC = () => {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     _id: "",
     email: "",
@@ -31,11 +34,20 @@ const LoginForm: React.FC = () => {
         password: formData.password,
       });
 
-      console.log("-========> response", response);
-
       if (response.status === 200) {
         console.log("User is logged in:", response.data);
         setLoginMessage("User is Logged in.");
+
+        const data = await response.data;
+        console.log("data", data);
+
+        if (response) {
+          localStorage.setItem("authToken", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+          router.push("/");
+        } else {
+          alert(data.message || "Login Failed");
+        }
       }
     } catch (error) {
       console.error("Error finding user:", error);
@@ -51,20 +63,22 @@ const LoginForm: React.FC = () => {
     return () => clearTimeout(timer);
   }, [loginMessage]);
 
+  
   return (
     <div>
       {loginMessage && <div>{loginMessage}</div>}
       <form action="" onSubmit={handleSubmit} className={styles.signupform}>
         <div className={styles.signupCard}>
-          <h2>Login</h2>
           <div className="flex min-h-screen w-full">
-            <div className="w-2/5 bg-[#2874f0] text-white p-10 flex flex-col justify-center">
+            <div className="w-2/5 bg-[#2874f0] text-white p-1 flex flex-col justify-center">
               <h1 className="text-3xl font-bold mb-4">Login</h1>
               <p className="text-sm leading-relaxed">
                 Get access to your Orders, Wishlist and Recommendations
               </p>
               <Image
                 src="https://img.freepik.com/free-vector/login-concept-illustration_114360-739.jpg"
+                width={300}
+                height={200}
                 alt="Login illustration"
                 className="mt-8 w-full"
               />
@@ -93,11 +107,12 @@ const LoginForm: React.FC = () => {
                 Policy.
               </p>
               <button
-                className="bg-orange-500 text-white font-semibold py-3 rounded-sm mb-4"
+                className="bg-orange-500 text-white font-semibold py-3 rounded-sm mb-4 cursor-pointer transition-transform duration-200 hover:scale-105"
                 type="submit"
               >
                 Login
               </button>
+         
               <p className="text-sm text-blue-500 font-medium cursor-pointer">
                 New to BuyNest? Create an account
               </p>
