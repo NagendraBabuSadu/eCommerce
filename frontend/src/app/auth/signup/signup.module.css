@@ -2,12 +2,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Centering the form on the page */
+  height: 90vh; /* Centering the form on the page */
 }
 
 .signupCard {
   background: rgba(161, 158, 158, 0.562); /* Clean white card */
-  padding: 40px 30px;
+  padding: 10px 10px;
   border-radius: 12px;
   text-align: center;
   border: "2px solid black";
