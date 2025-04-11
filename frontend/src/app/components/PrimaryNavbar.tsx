@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -33,7 +33,7 @@ const SearchBox = styled("div")(({ theme }) => ({
 
 const PrimaryNavbar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [userLogged, setUserLogged] = useState<Boolean>(false);
+  const [userLogged, setUserLogged] = useState<boolean>(false);
 
   const theme = useTheme();
   const router = useRouter();
@@ -64,7 +64,6 @@ const PrimaryNavbar = () => {
       return;
     }
 
-  
     try {
       const response = await axios.post(
         `${baseUrl}/auth/logout`,
