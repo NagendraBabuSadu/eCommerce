@@ -22,14 +22,6 @@ const isUser = async function (
       return void res.status(401).json({ message: "No token, authorization denied." });
     }
 
-    // const isBlacklisted = await redis.get(`blacklist: ${token}`)
-
-    // if(isBlacklisted){
-    //   return res.status(401).json({ msg: "Session expired. Please log in again." });
-    // }
-
-
-
     const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string) as {id: string};
     const user = await userModel.findById(decoded.id);
 
