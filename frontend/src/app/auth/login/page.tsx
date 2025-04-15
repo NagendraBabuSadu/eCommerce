@@ -31,7 +31,7 @@ const LoginForm: React.FC = () => {
     try {
       const response = await axios.post(`${baseUrl}/auth/login`, {
         email: formData.email,
-        password: formData.password,
+        password: formData.password
       });
 
       if (response.status === 200) {
@@ -43,7 +43,7 @@ const LoginForm: React.FC = () => {
 
         if (response) {
           localStorage.setItem("authToken", data.token);
-          localStorage.setItem("user", JSON.stringify(data.user));
+          localStorage.setItem("user", JSON.stringify(data.username));
           router.push("/");
         } else {
           alert(data.message || "Login Failed");
