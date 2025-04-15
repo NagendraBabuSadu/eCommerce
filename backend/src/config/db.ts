@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 
 // Load environment variables from .env.local
 dotenv.config({ path: path.resolve(__dirname, "../../.env.local") });
-console.log("Loaded ENV:", process.env); // ⬅️ check this in terminal
+console.log("Loaded ENV:", process.env); 
 
 const MONGO_DB_URL = process.env.MONGO_DB_URL as string;
 
