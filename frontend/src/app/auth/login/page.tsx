@@ -13,6 +13,7 @@ const LoginForm: React.FC = () => {
     _id: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const [loginMessage, setLoginMessage] = useState<string | null>(null);
@@ -20,6 +21,11 @@ const LoginForm: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const isFormValid =
+    formData.password &&
+    formData.confirmPassword &&
+    formData.password === formData.confirmPassword;
 
   const handleSubmit = async (e: React.FormEvent) => {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/+$/, ""); // Remove trailing slashes
@@ -31,7 +37,7 @@ const LoginForm: React.FC = () => {
     try {
       const response = await axios.post(`${baseUrl}/auth/login`, {
         email: formData.email,
-        password: formData.password
+        password: formData.password,
       });
 
       if (response.status === 200) {
@@ -53,7 +59,7 @@ const LoginForm: React.FC = () => {
       console.error("Error finding user:", error);
     }
 
-    setFormData({ _id: "", email: "", password: "" });
+    setFormData({ _id: "", email: "", password: "", confirmPassword: "" });
   };
 
   useEffect(() => {
@@ -63,7 +69,6 @@ const LoginForm: React.FC = () => {
     return () => clearTimeout(timer);
   }, [loginMessage]);
 
-  
   return (
     <div>
       {loginMessage && <div>{loginMessage}</div>}
@@ -88,7 +93,7 @@ const LoginForm: React.FC = () => {
             <div className="w-3/5 bg-white p-10 flex flex-col justify-center">
               <input
                 type="email"
-                name="email" // ✅ this is the key!
+                name="email"
                 placeholder="Enter Email"
                 className="border-b border-gray-300 py-3 mb-6 focus:outline-none"
                 value={formData.email}
@@ -102,17 +107,28 @@ const LoginForm: React.FC = () => {
                 value={formData.password}
                 onChange={handleChange}
               />
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                className="border-b border-gray-300 py-3 mb-6 focus:outline-none"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+              />
               <p className="text-xs text-gray-500 mb-4">
                 By continuing, you agree to BuyNest Terms of Use and Privacy
                 Policy.
               </p>
+
               <button
-                className="bg-orange-500 text-white font-semibold py-3 rounded-sm mb-4 cursor-pointer transition-transform duration-200 hover:scale-105"
+                className="bg-orange-500 text-white font-semibold py-3 rounded-sm mb-4 transition-transform duration-200
+             hover:scale-105 disabled:opacity-10 disabled:cursor-not-allowed disabled:hover:scale-100 hover:cursor-pointer"
                 type="submit"
+                disabled={!isFormValid}
               >
                 Login
               </button>
-         
+
               <p className="text-sm text-blue-500 font-medium cursor-pointer">
                 New to BuyNest? Create an account
               </p>
