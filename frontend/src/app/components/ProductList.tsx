@@ -23,6 +23,9 @@ const ProductList: React.FC = () => {
     }[]
   >([]);
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
   interface Product {
     _id: string;
     productName: string;
@@ -42,14 +45,43 @@ const ProductList: React.FC = () => {
       try {
         const response = await axios.get(`${baseUrl}/products`);
         setProducts(response.data);
+        setLoading(false);
         console.log("Fetched products:", response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
+        setError(true);
+        setLoading(false);
       }
     };
 
     fetchProducts();
   }, []); // Empty dependency array = runs once on mount
+
+  if (loading)
+    return (
+      <div
+        style={{
+          margin: "auto",
+          display: "flex",
+          fontWeight: "bold",
+        }}
+      >
+        <h1>Loading products...</h1>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div
+        style={{
+          margin: "auto",
+          display: "flex",
+          fontWeight: "bold",
+        }}
+      >
+        Failed to load products
+      </div>
+    );
 
   return (
     <div>
@@ -106,6 +138,7 @@ const ProductList: React.FC = () => {
               component="img"
               image={product.image}
               alt={product.productName}
+              loading="lazy"
               sx={{
                 width: "40%", // adjust as needed
                 height: "100%",
@@ -114,7 +147,7 @@ const ProductList: React.FC = () => {
                 // transition: "all 0.3s ease-in-out",
                 "&:hover": {
                   transform: "scale(1.3)  translateX(10px)",
-                }
+                },
               }}
             />
 
@@ -125,7 +158,7 @@ const ProductList: React.FC = () => {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
-                p: 2
+                p: 2,
               }}
             >
               {/* Top Section */}
@@ -167,7 +200,7 @@ const ProductList: React.FC = () => {
                   size="small"
                   fullWidth
                   sx={{ mt: 1 }}
-                  onClick={()=> alert("add to cart")}
+                  onClick={() => alert("add to cart")}
                 >
                   Add to Cart
                 </Button>
