@@ -4,9 +4,9 @@ import {
   getCartProducts,
 } from "../controllers/cart.controller.js";
 import isUser from "../middlewares/isUser.js";
-import isAdmin from "../middlewares/isAdmin.js";
 import { Request, Response, NextFunction } from "express";
 import { RequestHandler } from "express";
+import { isAuthenticated } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -26,7 +26,9 @@ const authorizeUserOrAdmin: RequestHandler = (
 ) : void => {
     const user = (req as AuthRequest).user;
 
+    console.log("user, .....", user)
   if (user && (user.role === "user" || user.role === "admin")) {
+
     return next();
   }
 
@@ -34,7 +36,7 @@ const authorizeUserOrAdmin: RequestHandler = (
 };
 
 
-router.post("/", authorizeUserOrAdmin, addCartProducts);
+router.post("/", isAuthenticated, authorizeUserOrAdmin, addCartProducts);
 router.get("/", isUser, getCartProducts);
 
 export default router;
