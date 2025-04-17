@@ -9,6 +9,7 @@ const addCartProducts = async (
   next: NextFunction
 ) : Promise <void>=>  {
   const userId = req.user?.id; // Extract from authenticated request
+  console.log("userId", userId);
   try {
     const createPayload = req.body;
     const parsedPayload = createCart.safeParse(createPayload);
