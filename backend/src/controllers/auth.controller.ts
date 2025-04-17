@@ -50,7 +50,6 @@ export const signup = async function (
   }
 };
 
-
 export const authUpdate = async function (
   req: Request,
   res: Response,
@@ -99,21 +98,21 @@ export const login = async function (
       return res.status(411).json({ msg: "You sent wrong inputs" });
     }
 
-    const existingUser = await userModel.findOne({ email: loginPayload.email });
+    const existingUser = await userModel.findOne({ email: loginPayload.email }).select("+password");
 
     if (!existingUser) {
       return res.status(400).json({ message: "User not found." });
     }
 
     const isPasswordCorrect = await bcrypt.compare(
-      loginPayload.password, 
+      loginPayload.password,
       existingUser.password
     );
 
-    if(!isPasswordCorrect) {
+    if (!isPasswordCorrect) {
       return res.status(201).json({
-        message: "Invalid Credentials."
-      })
+        message: "Invalid Credentials.",
+      });
     }
 
     // Generate JWT Token
@@ -131,7 +130,7 @@ export const login = async function (
       message: "Login successful",
       token: token,
       useremail: existingUser.email,
-      username: existingUser.username
+      username: existingUser.username,
     });
   } catch (error) {
     console.error("Error in /login:", error);
