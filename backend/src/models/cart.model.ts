@@ -1,7 +1,6 @@
 // Cart Model (User, Products, Quantity)
 
 import mongoose, { Schema } from "mongoose";
-import { string } from "zod";
 
 interface ICart {
   products: object;
@@ -11,25 +10,30 @@ interface ICart {
   price: number;
 }
 
-const cartSchema = new Schema<ICart>({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User", // Reference to the User model
-    required: true,
-  },
-
-  products: [
-    {
-      product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
-        required: true,
-      },
-      productName: { type: String, required: true },
-      quantity: { type: Number, required: true },
-      price: { type: Number, required: true },
+const cartSchema = new Schema<ICart>(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User", // Reference to the User model
+      required: true,
     },
-  ],
-});
+
+    products: [
+      {
+        product: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        productName: { type: String, required: true },
+        quantity: { type: Number, required: true },
+        price: { type: Number, required: true },
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
 export default mongoose.model("Cart", cartSchema);
