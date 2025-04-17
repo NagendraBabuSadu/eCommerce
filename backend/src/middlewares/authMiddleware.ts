@@ -22,7 +22,7 @@ export const isAuthenticated = (
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
-
+    console.log("decoded..........", decoded);
     // Attach user to req
     req.user = {
       id: decoded.id,
