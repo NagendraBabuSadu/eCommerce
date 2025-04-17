@@ -55,7 +55,40 @@ const ProductList: React.FC = () => {
     };
 
     fetchProducts();
-  }, []); // Empty dependency array = runs once on mount
+  }, []);
+
+  const handleCart = async (e: React.MouseEvent, product: Product) => {
+    e.stopPropagation();
+    console.log("Product", product);
+
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/+$/, ""); // Remove trailing slashes
+    console.log("Sanitized API Base URL:", baseUrl);
+
+    try {
+      const token = localStorage.getItem("authToken");
+      console.log("Token:", token);
+      const response = await axios.post(
+        `${baseUrl}/cart`,
+        {
+          products: [
+            {
+              productName: product.productName,
+              quantity: 1,
+            },
+          ],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.data;
+      console.log("adding items to cart", data);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
 
   if (loading)
     return (
@@ -200,7 +233,7 @@ const ProductList: React.FC = () => {
                   size="small"
                   fullWidth
                   sx={{ mt: 1 }}
-                  onClick={() => alert("add to cart")}
+                  onClick={(e) => handleCart(e, product)}
                 >
                   Add to Cart
                 </Button>
