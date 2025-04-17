@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Box, Typography } from "@mui/material";
-import axios from "axios";
 
 const CartPage: React.FC = () => {
   
